@@ -1,0 +1,2 @@
+mobile/y/system-images/android-30/google_apis/arm64-v8a/system.img filter=lfs diff=lfs merge=lfs -text
+mobile/y/emulator/lib64/qt/lib/libQt6WebEngineCoreAndroidEmu.6.5.3.dylib filter=lfs diff=lfs merge=lfs -text
