@@ -128,3 +128,18 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Arquivos grandes relacionados ao emulador e imagens do Android
+mobile/y/emulator/qemu/darwin-aarch64/*
+mobile/y/system-images/android-30/google_apis/arm64-v8a/*
+
+# Arquivos específicos
+mobile/y/emulator/lib64/qt/lib/libQt6WebEngineCoreAndroidEmu.6.5.3.dylib
+mobile/y/system-images/android-30/google_apis/arm64-v8a/system.img
+mobile/y/emulator/qemu/darwin-aarch64/qemu-system-aarch64
+mobile/y/emulator/qemu/darwin-aarch64/qemu-system-armel
+mobile/y/emulator/qemu/darwin-aarch64/qemu-system-armel-headless
+mobile/y/emulator/qemu/darwin-aarch64/qemu-system-aarch64-headless
+# Ignorar node_modules
+
+node_modules/
