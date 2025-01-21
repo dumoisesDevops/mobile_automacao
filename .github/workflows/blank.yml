@@ -1,0 +1,46 @@
+
+name: Teste  # Nome do pipeline
+
+on: push  # O pipeline será acionado em um push
+
+jobs:
+    build:
+      runs-on: ubuntu-latest
+  
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
+  
+        - name: Set up Git LFS
+          run: |
+            git lfs install  # Instala o Git LFS
+            git lfs pull     # Faz o download dos arquivos grandes
+  
+        - name: Set up Node.js
+          uses: actions/setup-node@v2
+          with:
+            node-version: '14'
+  
+        - name: Install dependencies
+          run: npm install
+  
+        - name: Set up Android SDK
+          run: |
+            sudo apt-get update
+            sudo apt-get install -y wget unzip
+            wget https://dl.google.com/android/repository/commandlinetools-linux-7583922_latest.zip
+            unzip commandlinetools-linux-7583922_latest.zip -d $HOME/android-sdk
+            yes | $HOME/android-sdk/tools/bin/sdkmanager --licenses
+            $HOME/android-sdk/tools/bin/sdkmanager "platform-tools" "platforms;android-30" "system-images;android-30;google_apis;x86_64"
+            $HOME/android-sdk/tools/bin/avdmanager create avd --name testAVD --package "system-images;android-30;google_apis;x86_64" --device "pixel" --force
+  
+        - name: Start Android Emulator
+          run: |
+            nohup $HOME/android-sdk/emulator/emulator -avd testAVD -no-window -no-audio -gpu off & 
+            android-wait-for-emulator
+          env:
+            ANDROID_HOME: $HOME/android-sdk
+  
+        - name: Run WebDriverIO tests
+          run: npx wdio run ./wdio.conf.js
+  
